@@ -15,7 +15,7 @@
     "utctime_updated": "2022-01-07T21:46:45.000000Z",
     "package_name": "phantom_gcloudcomputeengine",
     "main_module": "gcloudcomputeengine_connector.py",
-    "min_phantom_version": "4.10.0.40961",
+    "min_phantom_version": "5.1.0",
     "app_wizard_version": "1.0.0",
     "pip_dependencies": {
         "wheel": [
