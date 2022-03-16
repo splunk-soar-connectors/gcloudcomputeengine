@@ -19,16 +19,14 @@ from __future__ import print_function, unicode_literals
 
 import json
 
-# Phantom App imports
+import googleapiclient.discovery
 import phantom.app as phantom
-from phantom.base_connector import BaseConnector
-from phantom.action_result import ActionResult
+from google.oauth2 import service_account
 from googleapiclient import errors
+from phantom.action_result import ActionResult
+from phantom.base_connector import BaseConnector
 
 from gcloudcomputeengine_consts import *
-
-import googleapiclient.discovery
-from google.oauth2 import service_account
 
 
 class RetVal(tuple):
@@ -313,8 +311,9 @@ class GcloudComputeEngineConnector(BaseConnector):
 
 
 def main():
-    import pudb
     import argparse
+
+    import pudb
     import requests
 
     pudb.set_trace()
