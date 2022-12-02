@@ -2,11 +2,11 @@
 # Google Cloud Compute Engine
 
 Publisher: Splunk Community  
-Connector Version: 1\.0\.3  
+Connector Version: 1\.0\.4  
 Product Vendor: Google  
 Product Name: Compute Engine  
 Product Version Supported (regex): "\.\*"  
-Minimum Product Version: 5\.1\.0  
+Minimum Product Version: 5\.3\.5  
 
 This app integrates with google cloud compute engine API that supports investigative and generic actions
 
