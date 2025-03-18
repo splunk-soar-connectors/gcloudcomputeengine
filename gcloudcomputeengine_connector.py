@@ -1,6 +1,6 @@
 # File: gcloudcomputeengine_connector.py
 #
-# Copyright (c) 2021-2022 Splunk Inc.
+# Copyright (c) 2021-2025 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,7 +15,6 @@
 #
 #
 # Python 3 Compatibility imports
-from __future__ import print_function, unicode_literals
 
 import json
 
@@ -36,13 +35,13 @@ class RetVal(tuple):
 
 class GcloudComputeEngineConnector(BaseConnector):
     def __init__(self):
-        super(GcloudComputeEngineConnector, self).__init__()
+        super().__init__()
         self._state = None
         self._project = None
         self._key_json = None
 
     def _get_error_message_from_exception(self, e):
-        """ This method is used to get appropriate error message from the exception.
+        """This method is used to get appropriate error message from the exception.
         :param e: Exception object
         :return: error message
         """
@@ -64,9 +63,9 @@ class GcloudComputeEngineConnector(BaseConnector):
 
         try:
             if error_code in ERROR_CODE_MESSAGE:
-                error_text = "Error Message: {0}".format(error_message)
+                error_text = f"Error Message: {error_message}"
             else:
-                error_text = "Error Code: {0}. Error Message: {1}".format(error_code, error_message)
+                error_text = f"Error Code: {error_code}. Error Message: {error_message}"
         except:
             self.debug_print(PARSE_ERROR_MESSAGE)
             error_text = PARSE_ERROR_MESSAGE
@@ -82,15 +81,11 @@ class GcloudComputeEngineConnector(BaseConnector):
                 scopes=["https://www.googleapis.com/auth/cloud-platform"],
             )
 
-            self._client = googleapiclient.discovery.build(
-                COMPUTE, COMPUTE_VERSION, credentials=credentials
-            )
+            self._client = googleapiclient.discovery.build(COMPUTE, COMPUTE_VERSION, credentials=credentials)
 
         except Exception as e:
             err = self._get_error_message_from_exception(e)
-            return action_result.set_status(
-                phantom.APP_ERROR, "Could not create google api client: {0}".format(err)
-            )
+            return action_result.set_status(phantom.APP_ERROR, f"Could not create google api client: {err}")
 
         return phantom.APP_SUCCESS
 
@@ -125,9 +120,7 @@ class GcloudComputeEngineConnector(BaseConnector):
         return action_result.set_status(phantom.APP_SUCCESS)
 
     def _handle_tag_instance(self, param):
-        self.save_progress(
-            "In action handler for: {0}".format(self.get_action_identifier())
-        )
+        self.save_progress(f"In action handler for: {self.get_action_identifier()}")
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         if not self._create_discovery_client(action_result):
@@ -137,7 +130,7 @@ class GcloudComputeEngineConnector(BaseConnector):
         zone = param["zone"]
         resourceid = param["id"]
         tags = param["tags"]
-        tags = [tags.strip() for tags in tags.split(',')]
+        tags = [tags.strip() for tags in tags.split(",")]
         tags = list(filter(None, tags))
         if not tags:
             tags = ""
@@ -145,9 +138,7 @@ class GcloudComputeEngineConnector(BaseConnector):
             tags = ",".join(tags)
 
         try:
-            request = self._client.instances().get(
-                project=self._project, zone=zone, instance=resourceid
-            )
+            request = self._client.instances().get(project=self._project, zone=zone, instance=resourceid)
         except Exception as e:
             err = self._get_error_message_from_exception(e)
             return action_result.set_status(phantom.APP_ERROR, err)
@@ -162,9 +153,7 @@ class GcloudComputeEngineConnector(BaseConnector):
         }
 
         try:
-            request = self._client.instances().setTags(
-                project=self._project, zone=zone, instance=resourceid, body=tags_body
-            )
+            request = self._client.instances().setTags(project=self._project, zone=zone, instance=resourceid, body=tags_body)
         except Exception as e:
             err = self._get_error_message_from_exception(e)
             return action_result.set_status(phantom.APP_ERROR, err)
@@ -175,9 +164,7 @@ class GcloudComputeEngineConnector(BaseConnector):
         return action_result.set_status(phantom.APP_SUCCESS, "Success")
 
     def _handle_describe_instance(self, param):
-        self.save_progress(
-            "In action handler for: {0}".format(self.get_action_identifier())
-        )
+        self.save_progress(f"In action handler for: {self.get_action_identifier()}")
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         if not self._create_discovery_client(action_result):
@@ -188,9 +175,7 @@ class GcloudComputeEngineConnector(BaseConnector):
         resourceid = param["id"]
 
         try:
-            request = self._client.instances().get(
-                project=self._project, zone=zone, instance=resourceid
-            )
+            request = self._client.instances().get(project=self._project, zone=zone, instance=resourceid)
         except Exception as e:
             err = self._get_error_message_from_exception(e)
             return action_result.set_status(phantom.APP_ERROR, err)
@@ -214,9 +199,7 @@ class GcloudComputeEngineConnector(BaseConnector):
         return action_result.set_status(phantom.APP_SUCCESS, "Success")
 
     def _handle_stop_instance(self, param):
-        self.save_progress(
-            "In action handler for: {0}".format(self.get_action_identifier())
-        )
+        self.save_progress(f"In action handler for: {self.get_action_identifier()}")
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         if not self._create_discovery_client(action_result):
@@ -227,9 +210,7 @@ class GcloudComputeEngineConnector(BaseConnector):
         resourceid = param["id"]
 
         try:
-            request = self._client.instances().stop(
-                project=self._project, zone=zone, instance=resourceid
-            )
+            request = self._client.instances().stop(project=self._project, zone=zone, instance=resourceid)
         except Exception as e:
             err = self._get_error_message_from_exception(e)
             return action_result.set_status(phantom.APP_ERROR, err)
@@ -243,9 +224,7 @@ class GcloudComputeEngineConnector(BaseConnector):
         return action_result.set_status(phantom.APP_SUCCESS, "Success")
 
     def _handle_start_instance(self, param):
-        self.save_progress(
-            "In action handler for: {0}".format(self.get_action_identifier())
-        )
+        self.save_progress(f"In action handler for: {self.get_action_identifier()}")
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         if not self._create_discovery_client(action_result):
@@ -256,9 +235,7 @@ class GcloudComputeEngineConnector(BaseConnector):
         resourceid = param["id"]
 
         try:
-            request = self._client.instances().start(
-                project=self._project, zone=zone, instance=resourceid
-            )
+            request = self._client.instances().start(project=self._project, zone=zone, instance=resourceid)
         except Exception as e:
             err = self._get_error_message_from_exception(e)
             return action_result.set_status(phantom.APP_ERROR, err)
@@ -324,7 +301,7 @@ def main():
     argparser.add_argument("input_test_json", help="Input Test JSON file")
     argparser.add_argument("-u", "--username", help="username", required=False)
     argparser.add_argument("-p", "--password", help="password", required=False)
-    argparser.add_argument('-v', '--verify', action='store_true', help='verify', required=False, default=False)
+    argparser.add_argument("-v", "--verify", action="store_true", help="verify", required=False, default=False)
 
     args = argparser.parse_args()
     session_id = None
@@ -334,7 +311,6 @@ def main():
     verify = args.verify
 
     if username is not None and password is None:
-
         # User specified a username but not a password, so ask
         import getpass
 
