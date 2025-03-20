@@ -1,6 +1,6 @@
 # File: gcloudcomputeengine_consts.py
 #
-# Copyright (c) 2021-2022 Splunk Inc.
+# Copyright (c) 2021-2025 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
 #
 #
 # Define your constants here
-COMPUTE = 'compute'
-COMPUTE_VERSION = 'v1'
+COMPUTE = "compute"
+COMPUTE_VERSION = "v1"
 
 # Error message handling constants
 ERROR_CODE_MESSAGE = "Error code unavailable"
