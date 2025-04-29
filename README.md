@@ -8,6 +8,19 @@ Minimum Product Version: 5.3.5
 
 This app integrates with google cloud compute engine API that supports investigative and generic actions
 
+Actions in this app utilize the following API:
+https://cloud.google.com/compute/docs/reference/rest/v1
+
+## Explanation of Asset Configuration Parameters
+
+The asset configuration parameters affect [test connectivity] and all the other actions of the
+application. Below are the explanation and usage of all those parameters.
+
+- **Contents of Service Account JSON file -** After creating a Service Account for authenticating
+  with Google Cloud Storage (https://console.cloud.google.com/iam-admin/serviceaccounts/project),
+  the file can be downloaded. Paste the contents into the asset configuration input as-is.
+- **Project ID -** The Google Cloud Project ID.
+
 ### Configuration variables
 
 This table lists the configuration variables required to operate Google Cloud Compute Engine. These variables are specified when configuring a Compute Engine asset in Splunk SOAR.
