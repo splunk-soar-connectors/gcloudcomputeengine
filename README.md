@@ -1,7 +1,7 @@
 # Google Cloud Compute Engine
 
 Publisher: Splunk Community \
-Connector Version: 1.0.4 \
+Connector Version: 1.0.5 \
 Product Vendor: Google \
 Product Name: Compute Engine \
 Minimum Product Version: 5.3.5
